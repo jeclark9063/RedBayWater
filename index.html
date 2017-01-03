@@ -13,14 +13,22 @@
 
         <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css">
-        <link rel="stylesheet" href="measure/leaflet-measure.css">
+
         <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
         <link rel="stylesheet" href="assets/typeahead/typeahead.js-bootstrap.css" />
-		    <link rel="stylesheet" href="assets/cartodb_patch.css" />
         <link href='http://fonts.googleapis.com/css?family=Fenix|Meddon' rel='stylesheet' type='text/css'>
         <link href= 'assets/template.css' rel='stylesheet' type='text/css'>
+
+        <!-- Load Leaflet from CDN-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet-src.js"></script>
+
+        <!-- Load Esri Leaflet from CDN -->
+        <script src="https://unpkg.com/esri-leaflet@2.0.6"></script>
+
+        <!-- Esri Leaflet Geocoder -->
+        <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.2/dist/esri-leaflet-geocoder.css">
+        <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.2"></script>
     </head>
 
     <body>
@@ -157,7 +165,7 @@
                   <div class = "checkbox">
                   <label>
                   <input type="checkbox" name="overlayLayers" id="waterLayer" z-index="3" checked>
-                  Parcels &nbsp;<width="20" height="28">
+                  Not Parcels &nbsp;<width="20" height="28">
                   </div>
                   <!-- End water checkbox -->
 								</div>
@@ -354,11 +362,8 @@
 <!-- This is where leaflet map begins -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
-<script src="https://cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
-<script src="measure/leaflet-measure.js"></script>
 <script type="text/javascript" src="assets/leaflet-hash.js"></script>
-<script type="text/javascript" src="measure/measure.js"></script>
+<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
 
 <script type="text/javascript">
 

@@ -1,62 +1,7 @@
 var layers = {}; //Global layers object
 var map;
 
-var coords = [34.51575098250388, -87.7177619934082];
-var cid = 11610;
-function createCartoParcel(onCreated)
-{
-    var layerUrl = 'https://cartomike.carto.com/api/v2/viz/92b6a26e-a3c9-11e6-a4a5-0ecd1babdde5/viz.json';
- //   layerUrl = oldLayerUrl;
-    cartodb.createLayer(map, layerUrl, {infowindow: false}).addTo(map).on('done', function (layer) {
-                     layer.setZIndex(10);
-                     layers.cartoParcel = layer;
 
-                     layers.cartoParcel.getSubLayer(1).setInteraction(true);
-                     layers.cartoParcel.getSubLayer(1).on('featureClick', function(e, latlng, pos, data, layer) {
-                           console.log(data);
-                        infowindowFromId(data.cartodb_id);
-                     });
-
-                     layer.on('mouseover', function() {
-                         $('#map').css('cursor','pointer');
-                     });
-                     layer.on('mouseout', function() {
-                         $('#map').css('cursor','');
-                     });
-
-                   /* cartodb.vis.Vis.addInfowindow(map, layer.getSubLayer(1), ['cartodb_id','ownername'],{
-                        infowindowTemplate: $('#custom_infowindow_template').html(),
-                        templateType: 'mustache'
-                          layers.cartoParcel.on('featureClick', function(e, latlng, pos, data, layer) {
-      console.log(data);
-    });
-
-  });*/
-
-              onCreated();
-                }).on('error', function () {
-                        console.log("Error creating Carto Parcel layer");
-                  });
-
-}
-
-function infowindowFromId(id)
-{
-    var sql = new cartodb.SQL({ user: 'cartomike' });
-     var endpoint = "https://cartomike.carto.com/api/v2/sql/";
-    // ownerQ = ownerQ.split("{NAME}").join(name);
-     var myQuery = "SELECT *,ST_AsGeoJSON(ST_Centroid(the_geom)) as centroid FROM parcels_carto WHERE cartodb_id = " + id;
-console.log(id);
-
-
-     $.getJSON(
-     endpoint,
-     { q: myQuery },
-     function (data) {
-         //console.log(data.rows[0]);
-         openPopup(data.rows[0]);
-     });
-}
 
 function createMapboxOSM()
 {
@@ -86,23 +31,7 @@ function createAnnotations()
 				});
 }
 
-function createFloodZones()
-{
-    var url = "https://cartomike.carto.com/api/v2/viz/5e192bc2-9f8b-11e6-bc84-0ee66e2c9693/viz.json";
-      cartodb.createLayer(map,url).on('done', function (layer) {
-                     layer.setZIndex(10);
-                     layers.cartoFloodZones = layer;
-});
-}
 
-function createZoning()
-{
-    var url = "https://cartomike.carto.com/api/v2/viz/06248722-a850-11e6-a7dc-0ee66e2c9693/viz.json";
-      cartodb.createLayer(map,url).on('done', function (layer) {
-                     layer.setZIndex(9);
-                     layers.cartoZoning = layer;
-});
-}
 
 function createReference()
 {
@@ -112,14 +41,6 @@ function createReference()
                      layers.cartoReference = layer;
 });
 }
-
-/*function createWaterLayer()
-{
-    var water = L.esri.featureLayer({
-      url: 'http://8.35.16.158/arcgisserver/rest/services/RedBayWater/FeatureServer/0'
-    }).addTo(map);
-}
-*/
 
 function createWaterLayer()
 {
@@ -136,9 +57,8 @@ function createLayers(onFinished)
         createMapboxSAT();
         createEsriTopo();
         createAnnotations();
-        createFloodZones();
-		    createZoning();
-		    createReference();
+		createReference();
+        addArgGisSearch();
         onFinished();
 }
 
@@ -182,10 +102,26 @@ function createMap()
     var hash = new L.Hash(map);
 }
 
+function addArgGisSearch()
+{
+    var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+
+    // create an empty layer group to store the results and add it to the map
+    var results = L.layerGroup().addTo(map);
+
+    // listen for the results event and add every result to the map
+    searchControl.on("results", function(data) {
+        results.clearLayers();
+       for (var i = data.results.length - 1; i >= 0; i--) {
+            results.addLayer(L.marker(data.results[i].latlng));
+        }
+    });
+}
+
 $(function(){
     createMap();
     createLayers(function(){
-       addMeasureTool();
+      // addMeasureTool();
        map.addLayer(layers.mapboxOSM);
     });
 
@@ -212,6 +148,10 @@ L.esri.dynamicMapLayer({
 
 
 //Layer toggle
+$(function()
+{
+    $("input[name='overlayLayers']").trigger("change");
+});
 
     $("input[name='basemapLayersRadio']").change(function () {
 

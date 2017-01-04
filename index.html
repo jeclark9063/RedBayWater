@@ -62,7 +62,6 @@
         <ul class="nav nav-tabs" id="myTab">
           <li class ="active" style="color: black"><a href="#test" data-toggle="tab" style="color: black"><i class="fa fa-child"></i>&nbsp;Welcome</a></li>
           <li><a href="#layers" data-toggle="tab" style="color: black"><i class="fa fa-check-square-o"></i>&nbsp;Map Controls</a></li>
-          <li><a href="#search" data-toggle="tab" style="color: black"><i class="fa fa-check-square-o"></i>&nbsp;Search</a></li>
         </ul>
         <!-- End Sidebar navigation -->
 
@@ -156,18 +155,34 @@
                   <!-- Reference Features checkbox -->
                   <div class = "checkbox">
                   <label>
-                  <input type="checkbox" name="overlayLayers" id="cartoReference" z-index="2">
+                  <input type="checkbox" name="overlayLayers" id="cartoReference" z-index="1">
                   Reference Features &nbsp;<width="20" height="28">
                   </div>
                   <!-- End Reference Features checkbox -->
 
-                  <!-- water checkbox -->
+                  <!-- water meters checkbox -->
                   <div class = "checkbox">
                   <label>
-                  <input type="checkbox" name="overlayLayers" id="waterLayer" z-index="3" checked>
-                  Not Parcels &nbsp;<width="20" height="28">
+                  <input type="checkbox" name="overlayLayers" id="waterMeters" z-index="2" checked>
+                  Water Meters &nbsp;<width="20" height="28">
                   </div>
-                  <!-- End water checkbox -->
+                  <!-- End water meters checkbox -->
+
+                  <!-- Water valves checkbox -->
+                  <div class = "checkbox">
+                  <label>
+                  <input type="checkbox" name="overlayLayers" id="waterValves" z-index="3" checked>
+                  Water Valves &nbsp;<width="20" height="28">
+                  </div>
+                  <!-- End Water valves checkbox -->
+
+                  <!-- Water hydrants checkbox -->
+                  <div class = "checkbox">
+                  <label>
+                  <input type="checkbox" name="overlayLayers" id="waterHydrants" z-index="4" checked>
+                  Water Hydrants &nbsp;<width="20" height="28">
+                  </div>
+                  <!-- End Water hydrants checkbox -->
 								</div>
               </div>
             </div>
@@ -216,35 +231,6 @@
             </div>
           </div>
           <!-- End Second tab -->
-
-          <!-- Third Tab -->
-          <div class="tab-pane" id="search">
-            <div class="panel-group">
-              <div class="panel panel-default">
-                <div class="panel-heading"; style="background-color: #e8e8e8">
-                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_" href="#overlay-layers" style="color: black"> Search</a>
-                  <div class="input-group search-container">
-                    <input id="searchbox" type="text" class="form-control" placeholder="Search owner name or parcel #" autocomplete="off">
-                        <span class="input-group-addon" id="searchButton"><i class="fa fa-search"></i></span>
-                  </div>
-                </div>
-
-                <div class="panel panel-default">
-                <div class="panel-body" id="search_results">
-
-
-                   <ul id="results_list">
-
-                   </ul>
-
-                </div>
-                </div>
-
-
-              </div>
-            </div>
-         </div>
-         <!-- End Third tab -->
       </div>
     </div>
 

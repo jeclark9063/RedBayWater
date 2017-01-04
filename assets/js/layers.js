@@ -42,22 +42,40 @@ function createReference()
 });
 }
 
-function createWaterLayer()
+function createWaterMeters()
 {
-    layers.waterLayer = L.esri.dynamicMapLayer({
-					url: 'http://8.35.16.158/arcgisserver/rest/services/RedBayWater/MapServer',
+    layers.waterMeters = L.esri.dynamicMapLayer({
+					url: 'http://8.35.16.158/arcgisserver/rest/services/RedBayWater/MapServer/',
+          layers: [0]
+				});
+}
+
+function createWaterValves()
+{
+    layers.waterValves = L.esri.dynamicMapLayer({
+					url: 'http://8.35.16.158/arcgisserver/rest/services/RedBayWater/MapServer/',
+          layers: [1]
+				});
+}
+
+function createWaterHydrants()
+{
+    layers.waterHydrants = L.esri.dynamicMapLayer({
+					url: 'http://8.35.16.158/arcgisserver/rest/services/RedBayWater/MapServer/',
+          layers: [2]
 				});
 }
 
 function createLayers(onFinished)
 {
-
-        createWaterLayer();
+        createWaterMeters();
+        createWaterValves();
+        createWaterHydrants();
         createMapboxOSM();
         createMapboxSAT();
         createEsriTopo();
         createAnnotations();
-		createReference();
+		    createReference();
         addArgGisSearch();
         onFinished();
 }
@@ -121,7 +139,6 @@ function addArgGisSearch()
 $(function(){
     createMap();
     createLayers(function(){
-      // addMeasureTool();
        map.addLayer(layers.mapboxOSM);
     });
 
@@ -133,21 +150,6 @@ function getLayerFromId(id)
     alert(id);
 }
 
-
-/*
-
-L.esri.dynamicMapLayer({
-					url: 'http://8.35.16.158/arcgisserver/rest/services/parcelanno_dyn/MapServer',
-					opacity: 0.7
-				}).addTo(map);
-*/
-
-
-
-
-
-
-//Layer toggle
 $(function()
 {
     $("input[name='overlayLayers']").trigger("change");
@@ -175,8 +177,6 @@ $(function()
         });
 
     });
-
-
 
     $("input[name='overlayLayers']").change(function () {
                     // Remove unchecked layers

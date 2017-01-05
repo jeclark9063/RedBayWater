@@ -1,8 +1,6 @@
 var layers = {}; //Global layers object
 var map;
 
-
-
 function createMapboxOSM()
 {
     layers.mapboxOSM = L.tileLayer("http://{s}.tiles.mapbox.com/v3/spatialnetworks.map-6l9yntw9/{z}/{x}/{y}.png", {
@@ -21,6 +19,14 @@ function createMapboxSAT()
                 attribution: 'Basemap <a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox © OpenStreetMap</a>'
             });
 
+}
+
+function createEsriTopo()
+{
+    layers.esriTopo = L.esri.tiledMapLayer({
+					url: 'http://tiles.arcgis.com/tiles/I97nVdg0OgwKVCpk/arcgis/rest/services/Basemap/MapServer',
+					opacity: 1.0
+				});
 }
 
 function createAnnotations()
@@ -80,19 +86,6 @@ function createLayers(onFinished)
         onFinished();
 }
 
-function createEsriTopo()
-{
-    layers.esriTopo = L.esri.tiledMapLayer({
-					url: 'http://tiles.arcgis.com/tiles/I97nVdg0OgwKVCpk/arcgis/rest/services/Basemap/MapServer',
-					opacity: 1.0
-				});
-}
-
-/*function createEsriTopo(onCreated)
-{
-    layers.esriTopo = L.esri.basemapLayer("Topographic");
-}
-*/
 function addMeasureTool()
 {
 	var measureControl = new L.control.measure({
@@ -136,6 +129,11 @@ function addArgGisSearch()
     });
 }
 
+function getLayerFromId(id)
+{
+    alert(id);
+}
+
 $(function(){
     createMap();
     createLayers(function(){
@@ -143,12 +141,6 @@ $(function(){
     });
 
 })
-
-
-function getLayerFromId(id)
-{
-    alert(id);
-}
 
 $(function()
 {

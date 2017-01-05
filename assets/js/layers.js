@@ -115,19 +115,26 @@ function createMap()
 
 function addArgGisSearch()
 {
-    var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+  var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
 
-    // create an empty layer group to store the results and add it to the map
-    var results = L.layerGroup().addTo(map);
-
-    // listen for the results event and add every result to the map
-    searchControl.on("results", function(data) {
-        results.clearLayers();
-       for (var i = data.results.length - 1; i >= 0; i--) {
-            results.addLayer(L.marker(data.results[i].latlng));
-        }
-    });
+var searchControl = L.esri.Geocoding.geosearch({
+  providers: [
+    arcgisOnline,
+    L.esri.Geocoding.featureLayerProvider({
+      url: 'http://8.35.16.158/arcgisserver/rest/services/RedBayWater/FeatureServer/0 ',
+      label: "Water accounts",
+      searchFields: ['ACCOUNTID', 'LOCATIONID'],
+      bufferRadius: 5000,
+      formatSuggestion: function(feature){
+        return feature.properties.ACCOUNTID + ' - ' + feature.properties.LOCATIONID;
+      }
+    })
+  ]
+}).addTo(map);
 }
+
+
+
 
 function getLayerFromId(id)
 {
